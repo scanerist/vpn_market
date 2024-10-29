@@ -1,0 +1,24 @@
+version: '3.11'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: vpn_shop_databse
+    environment:
+      POSTGRES_DB: vpn_shop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart:
+      unless-stopped
+    tty: true
+    stdin_open: true
+volumes:
+  postgres_data:
+    driver: local
